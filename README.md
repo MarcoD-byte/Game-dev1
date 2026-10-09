@@ -5,7 +5,7 @@
 ### FishFinders
 
 
-![Gameplay]((https://github.com/MarcoD-byte/Game-dev1/blob/main/images/fishfinders.png?raw=true))
-![GameOverScreen]((https://github.com/MarcoD-byte/Game-dev1/blob/main/images/gameover.png?raw=true))
+![Gameplay](https://github.com/MarcoD-byte/Game-dev1/blob/main/images/fishfinders.png?raw=true)
+![GameOverScreen](https://github.com/MarcoD-byte/Game-dev1/blob/main/images/gameover.png?raw=true)
 
 [Link for Source Code](url)
