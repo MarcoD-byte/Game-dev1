@@ -1,6 +1,6 @@
 # Marco DalCanto's Game Development Portfolio 2026
 
-## FishFinders
+## FishFinders - in progress
 
 ### Game Overview
 An object oriented game in which the player uses a mouse-guided player character to catch fish (via net projectiles), rack up points, and prevent fish from reaching the bottom of the screen. The player (A diver gif) uses nets to catch fish. The Timer class is used to cue the fish and powerups at (ir)regular intervals. There are three types of powerups: One that boots speed (the amount of lag between mouse movement and player movement is reduced), one that increases the maximum amount of ammo the player can hold (which recharges automatically), and one that heals the player.
