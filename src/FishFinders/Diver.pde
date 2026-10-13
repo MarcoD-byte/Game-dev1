@@ -20,15 +20,15 @@ class Diver {
   }
 
   void move(int tempX, int tempY) {
-    if ( tempX < width-25 && tempX > 0+25) {
-      dx = tempX - x;
+    dx = tempX - x;
+    if ( x+dx*easing < width-25 && x+dx*easing > 0+25) {
       x+=dx*easing;
     }
-
-    if (tempY < height-25 && tempY > 25) {
+    dy = tempY - y;
+    
+    if (y+dy * easing < height-25 && y+dy * easing > 25) {
       dy = tempY - y;
       y+= dy * easing;
     }
   }
-
 }
