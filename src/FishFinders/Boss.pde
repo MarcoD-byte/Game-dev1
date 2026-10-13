@@ -14,9 +14,9 @@ class Boss {
     size = 100;
     duration = new Timer(20000);
     if (level ==1) {
-      //gif = 1
+      dx =1;
     } else if (level ==2) {
-
+      dx= -1;
       //gif = 2
     } else {
       //gif = 3
@@ -24,27 +24,33 @@ class Boss {
   }
 
   void display() {
-    image(orange, x, y,size,size);
-    fill(255,0);
+    if (level == 1){
+    image(orange, x, y, size, size);
+    }else {
+     image(black, x, y, size, size); 
+    }
+    fill(255, 0);
     rectMode(CORNER);
-    rect(x-25,y+50, 50,10);
-    fill(255,0,0,255);
-    rect(x-25,y+50,(health/20)*50, 10);
-    println(health);
+    rect(x-25, y+70, 50, 7);
+    fill(255, 0, 0, 255);
+    rect(x-25, y+70, (health*(50/20)), 7);
+    //println(health);
   }
-  
-  void move(){
-   x+=dx;
-   y+=dy;
+
+  void move() {
+    x+=dx;
+    y+=dy;
+    if (x>width) {
+      gameOver();
+    }
   }
-  
+
   boolean isHit(Diver d) {
     float dist = dist(d.x, d.y, x, y);
-    if (dist<size+20) {
+    if (dist<size*2) {
       return true;
     } else {
       return false;
     }
   }
-  
 }
