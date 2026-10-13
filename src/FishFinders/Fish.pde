@@ -4,14 +4,13 @@ class Fish {
   Timer tx, ty;
 
   //Constructor
-  Fish (int x, int y, int level) {
+  Fish (int x, int y, int health) {
     this.x = x;
     this.y = y;
-
-    dy= 1;
+    this.health = health;
+    dy= level            ;
     dx= int(random(-1, 1));
     size = 32;
-    health = level;
     tx = new Timer(500);
     ty = new Timer(1000);
   }
@@ -34,7 +33,7 @@ class Fish {
   }
 
   void move() {
-    y=y+dy;
+    y+=dy;
     // bouneces off the walls when collides
     if (x <width-10 && x > 10) {
       x=x+dx;
