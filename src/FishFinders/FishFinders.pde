@@ -32,6 +32,7 @@ ArrayList<Fish> fishes = new ArrayList<Fish>();
 ArrayList<PowerUp> powUps = new ArrayList<PowerUp>();
 ArrayList<Laser> lasers = new ArrayList<Laser>();
 Boss boss1;
+Boss boss2;
 
 void setup() {
   level=1;
@@ -41,14 +42,15 @@ void setup() {
   fishPassed=0;
   play = false;
   // background
-  size(700, 700);
+  size(700, 1000);
   background = color(level*.5*100, level*.5*160, level*.5*200);
   background(background);
   //diver
   d1 = new Diver();
-  boss1 = new Boss(level, -50, 100);
+  boss1 = new Boss(level, -50, 150);
+  boss2 = new Boss(level, width+50, 150);
   // establish distribution timers
-  tf = new Timer(3000);
+  tf = new Timer(3000/level);
   tl = new Timer(300);
   tp = new Timer(int(random(5000, 50000)));
   tp.start();
@@ -72,17 +74,26 @@ void draw() {
 
     //startScreen();
   } else {
+    background = color(level*.5*100, level*.5*160, level*.5*200);
     background(background);
     scoreBoard();
     // diver
     d1.move(mouseX, mouseY);
     d1.display();
-    if (score>50){
-      if(boss1.health>0){
-      boss1.display();
-      boss1.move();
+    if (score>50) {
+      if (boss1.health>0) {
+        boss1.display();
+        boss1.move();
       }
+    } 
+    if (score > 500){
+     if (boss2.health>0){
+      boss2.display();
+      boss2.move();
+     }
     }
+    
+    
     // enemies
     if (tf.isFinished()) {
       fishes.add(new Fish(int(random(50, width-50)), 10, int(random(1, 6))));
@@ -142,11 +153,28 @@ void draw() {
       if (l.state ==1) {
         l.size += 1;
       }
-      if (l.isHit(boss1.x, boss1.y)){
+      if (l.isHit(boss1.x, boss1.y)) {
         boss1.health-=1;
+        l.state=2;
+        crack.play();
+        lasers.remove(l);
+        score+=10;
+        if (boss1.health<=0) {
+          level =2;
+        }
+      }
+      if (l.isHit(boss2.x, boss2.y)) {
+        boss2.health-=1;
+        l.state=2;
+        crack.play();
+        lasers.remove(l);
+        score+=10;
+        if (boss2.health<=0) {
+          level++;
+        }
       }
     }
-    println(lasers.size());
+    println(level);
 
     if (tl.isFinished() && ammo< maxAmmo) {
       ammo++;
@@ -181,6 +209,7 @@ void keyPressed() {
     tl.start();
   }
   if (key == ' '&& !play) {
+    delay(1000 );
     play = true;
     loop();
     tp.start();
@@ -212,15 +241,16 @@ void tutorialScreen() {
   text("the diver will follow your mouse", width/6, height/2 + 90);
   image(net, width/2, height-50);
   text("Don't let fish              reach the bottom", 5*width/6, height/2);
-  image(orange, 5*width/6-10, height/2-50);
+  image(orange, 5*width/6-10, height/2-40);
   image(purple, 5*width/6-10, height/2);
-  image(black, 5*width/6-10, height/2+50);
+  image(black, 5*width/6-10, height/2+40);
   fill(255);
   textSize(50);
   text("Press space to start...", width/2, 100);
   fill(200);
   textSize(20);
-  text("During game, click space to fire nets", width/2, 600);
+  text("During game, click space to fire nets", width/2, height-100);
+  delay(1000);
 }
 
 void startScreen() {
@@ -238,7 +268,7 @@ void startScreen() {
   text("Press space to start...", width/2, 100);
   fill(200);
   textSize(20);
-  text("During game, click space to fire nets", width/2, 600);
+  text("During game, click space to fire nets", width/2, height-100);
 }
 
 void gameOver() {
@@ -247,7 +277,7 @@ void gameOver() {
   startScreen();
   fill(200);
   textSize(20);
-  textMode(CENTER);
+  textAlign(CENTER);
   text("Game Over", width/2, height/2);
   scoreBoard();
   ammo=3;
@@ -255,7 +285,9 @@ void gameOver() {
   score = 0;
   fishPassed=0;
   d1.health=5;
+  d1.easing=0.1;
 
   fishes.clear();
   lasers.clear();
+  powUps.clear();
 }
