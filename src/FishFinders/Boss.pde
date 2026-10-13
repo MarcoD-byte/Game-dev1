@@ -9,7 +9,6 @@ class Boss {
     this.y = y;
     this.type= level;
     health = 20;
-    dx=1;
     dy=0;
     size = 100;
     duration = new Timer(20000);
@@ -24,10 +23,10 @@ class Boss {
   }
 
   void display() {
-    if (level == 1){
-    image(orange, x, y, size, size);
-    }else {
-     image(black, x, y, size, size); 
+    if (level == 1) {
+      image(orange, x, y, size, size);
+    } else {
+      image(black, x, y, size, size);
     }
     fill(255, 0);
     rectMode(CORNER);
@@ -40,8 +39,14 @@ class Boss {
   void move() {
     x+=dx;
     y+=dy;
-    if (x>width) {
-      gameOver();
+    if (level ==1) {
+      if (x>width+50) {
+        gameOver();
+      }
+    } else {
+      if (x<-50) {
+        gameOver();
+      }
     }
   }
 
